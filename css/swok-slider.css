@@ -1,0 +1,49 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+.wrapper {
+  padding: 20px;
+}
+.wrapper2 {
+  width: 75%;
+  padding: 40px;
+}
+/* 
+Sliders style
+*/
+.swok-slider__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.swok-slider__item {
+}
+.swok-slider__item * {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.swok-slider__button {
+  position: absolute;
+  top: 50%;
+  width: 15%;
+  height: 80%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.5);
+
+  border: 2px dashed red;
+}
+.swok-slider__button-prev {
+  left: 0;
+}
+.swok-slider__button-prev::after {
+  content: "<<";
+}
+.swok-slider__button-next {
+  right: 0;
+}
+.swok-slider__button-next::before {
+  content: ">>";
+}
