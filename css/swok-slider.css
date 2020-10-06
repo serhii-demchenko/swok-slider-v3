@@ -3,10 +3,12 @@ body {
   margin: 0;
 }
 .wrapper {
+  max-width: 50%;
+  margin: 0 auto;
   padding: 20px;
 }
 .wrapper2 {
-  width: 75%;
+  width: 30%;
   padding: 40px;
 }
 /* 
