@@ -19,8 +19,8 @@ Sliders style
   align-items: center;
   justify-content: center;
 }
-.swok-slider__item {
-}
+/* .swok-slider__item {
+} */
 .swok-slider__item * {
   width: 100%;
   height: auto;
@@ -35,17 +35,18 @@ Sliders style
   background-color: transparent;
   color: rgba(255, 255, 255, 0.5);
 
-  border: 2px dashed red;
+  border: transparent;
+  /* border: 2px dashed red; */
 }
 .swok-slider__button-prev {
   left: 0;
 }
 .swok-slider__button-prev::after {
-  content: "<<";
+  content: '<<';
 }
 .swok-slider__button-next {
   right: 0;
 }
 .swok-slider__button-next::before {
-  content: ">>";
+  content: '>>';
 }
