@@ -16,17 +16,12 @@ export default class {
 		this.prevButton = this.createSliderElement("button", "prev");
 		this.nextButton = this.createSliderElement("button", "next");
 		this.appendElements(this.wrapSlider(), this.prevButton, this.nextButton);
-		this.setSlidersWidth();
-
 		this.avtoFlipping = setInterval(this.nextSlideHandler.bind(this), this.delay);
+		
+		this.resizeHandler();
 
-		window.addEventListener("resize", this.setSlidersWidth.bind(this));
-
-		this.nextButton.addEventListener("click", this.nextSlideHandler.bind(this));
-		this.prevButton.addEventListener("click", this.prevSlideHandler.bind(this));
-		this.slider.addEventListener("click", e => {
-			console.log(e.target);
-		});
+		window.addEventListener("resize", this.resizeHandler.bind(this));
+		this.slider.addEventListener("click", this.clickHandler.bind(this));
 	}
 	wrapSlider() {
 		const wrapper = document.createElement("div");
@@ -59,8 +54,6 @@ export default class {
 				break;
 			}
 		}
-		this.calculateSlideCoordinates();
-		this.changeSlide();
 	}
 	calculateSlideCoordinates() {
 		this.sliderCoordinateArray = [];
@@ -79,5 +72,22 @@ export default class {
 	nextSlideHandler() {
 		this.curentSlide += this.curentSlide + 1 === this.sliderCount ? -this.sliderCount + 1 : 1;
 		this.changeSlide(true);
+	}
+	resizeHandler() {
+		this.setSlidersWidth();
+		this.calculateSlideCoordinates();
+		this.changeSlide();
+	}
+	clickHandler(e) {
+		if (e.target === this.nextButton) {
+			this.suspenseAutoFill(this.nextSlideHandler.bind(this));
+		} else if (e.target === this.prevButton) {
+			this.suspenseAutoFill(this.prevSlideHandler.bind(this))
+		}
+	}
+	suspenseAutoFill(cb) {
+		clearInterval(this.avtoFlipping);
+		cb();
+		this.avtoFlipping = setInterval(this.nextSlideHandler.bind(this), this.delay);
 	}
 }

@@ -7,5 +7,5 @@ const mySlider = new SwokSlider({
 const mySlider2 = new SwokSlider({
   transitionDuration: "250ms",
   sliderClass: ".swok-slider2",
-  delay: '250ms'
+  delay: '2000ms'
 });
