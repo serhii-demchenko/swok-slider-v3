@@ -12,10 +12,24 @@ export default class {
     this.slider.style.position = 'relative';
     this.sliderCount = this.slider.childElementCount;
     this.curentSlide = 0;
+    this.pointsEl = [];
     this.delay = Number.parseInt(delay);
-    this.prevButton = this.createSliderElement('button', 'prev');
-    this.nextButton = this.createSliderElement('button', 'next');
-    this.appendElements(this.wrapSlider(), this.prevButton, this.nextButton);
+    this.prevButton = this.createSliderElement('button', 'button', 'prev');
+    this.nextButton = this.createSliderElement('button', 'button', 'next');
+
+    this.points = this.createSliderElement('div', 'points');
+    for (let i = 0; i < this.sliderCount; i += 1) {
+      this.pointsEl.push(this.createSliderElement('div', 'point'));
+    }
+    this.points.append(...this.pointsEl);
+
+    console.log(this.points);
+    this.appendElements(
+      this.wrapSlider(),
+      this.prevButton,
+      this.nextButton,
+      this.points,
+    );
     this.avtoFlipping = setInterval(
       this.nextSlideHandler.bind(this),
       this.delay,
@@ -42,11 +56,11 @@ export default class {
   appendElements(...args) {
     this.slider.append(...args);
   }
-  createSliderElement(element, modifier) {
+  createSliderElement(element, className, modifier) {
     const elmt = document.createElement(element);
-    elmt.classList.add('swok-slider__' + element);
+    elmt.classList.add('swok-slider__' + className);
     if (modifier) {
-      elmt.classList.add('swok-slider__' + element + '-' + modifier);
+      elmt.classList.add('swok-slider__' + className + '-' + modifier);
     }
     return elmt;
   }
@@ -76,14 +90,18 @@ export default class {
       : 'none';
   }
   prevSlideHandler() {
+    this.points.children[this.curentSlide].style.backgroundColor = '#000'; //need to remake
     this.curentSlide =
       this.curentSlide - 1 > 0 ? this.curentSlide - 1 : this.sliderCount - 1;
     this.changeSlide(true);
+    this.points.children[this.curentSlide].style.backgroundColor = '#fff'; //need to remake
   }
   nextSlideHandler() {
+    this.points.children[this.curentSlide].style.backgroundColor = '#000'; //need to remake
     this.curentSlide +=
       this.curentSlide + 1 === this.sliderCount ? -this.sliderCount + 1 : 1;
     this.changeSlide(true);
+    this.points.children[this.curentSlide].style.backgroundColor = '#fff'; //need to remake
   }
   resizeHandler() {
     this.setSlidersWidth();
@@ -95,6 +113,12 @@ export default class {
       this.suspenseAutoFill(this.nextSlideHandler.bind(this));
     } else if (e.target === this.prevButton) {
       this.suspenseAutoFill(this.prevSlideHandler.bind(this));
+    } else if (e.target.classList.contains('swok-slider__point')) {
+      //need to remake
+      this.points.children[this.curentSlide].style.backgroundColor = '#000';
+      this.curentSlide = this.pointsEl.indexOf(e.target);
+      this.suspenseAutoFill(this.changeSlide.bind(this, true));
+      this.points.children[this.curentSlide].style.backgroundColor = '#fff';
     }
   }
   suspenseAutoFill(cb) {

@@ -34,8 +34,8 @@ Sliders style
   transform: translateY(-50%);
   background-color: transparent;
   color: rgba(255, 255, 255, 0.5);
-
   border: transparent;
+  outline: none;
   /* border: 2px dashed red; */
 }
 .swok-slider__button-prev {
@@ -49,4 +49,21 @@ Sliders style
 }
 .swok-slider__button-next::before {
   content: '>>';
+}
+.swok-slider__points {
+  position: absolute;
+  display: flex;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.swok-slider__point {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  opacity: 0.4;
+  background-color: #000000;
+}
+.swok-slider__point:not(:last-child) {
+  margin-right: 8px;
 }
